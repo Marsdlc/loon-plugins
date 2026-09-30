@@ -1,0 +1,18 @@
+#!name=小红书屏蔽首页及本地视频
+#!desc=保留首页和本地信息流中 type=normal 的条目，沿用墨鱼原规则。无需外部 JS。
+#!author=ddgksf2013（原规则）；Codex（Loon 格式适配）
+#!homepage=https://ddgksf2013.top/rewrite/XiaoHongShuBlockVideo.conf
+
+# 原配置：XiaoHongShuBlockVideo.conf V1.0.1，2026-04-18
+# 原站读取失败，本次依据以下 GitHub 镜像转换；未核实原站是否有后续更新。
+# https://github.com/ifflagged/Romeo/blob/5396353603198b21e8716892e69311f8b11bbbbb/Modules/QuantumultX/ddgksf2013/XiaoHongShuBlockVideo.conf
+# 使用：将本文件导入 Loon 插件并启用，开启复写及 MitM，安装并信任 Loon CA 证书。
+# 采用 Loon 兼容语法，保留原 URL 正则、jq 表达式和 MitM 域名。
+# 过滤范围仅为 homefeed / localfeed；所有非 normal 条目都会被过滤。
+# 转换后已检查 jq 样例输出，尚未在 iPhone / Loon 中实测。
+
+[Rewrite]
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/api/sns/v\d/(homefeed|localfeed) response-body-json-jq '.data |= map(select(.type == "normal"))'
+
+[Mitm]
+hostname = *.xiaohongshu.com
