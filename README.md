@@ -7,12 +7,13 @@
 | 插件 | 功能 | 订阅地址 |
 | --- | --- | --- |
 | 小红书屏蔽首页及本地视频 | 过滤首页和本地信息流，仅保留 `type=normal` 的条目 | [订阅](https://raw.githubusercontent.com/Marsdlc/loon-plugins/main/plugins/XiaoHongShuBlockVideo.plugin) |
+| 闲鱼去广告 | 净化开屏、首页、搜索、我的页面及推荐信息流，含 AMDC 处理 | [订阅](https://raw.githubusercontent.com/Marsdlc/loon-plugins/main/plugins/GoofishAds.plugin) |
 
 ## 使用方法
 
 1. 在 Loon 的插件页面添加插件，将上面的订阅地址粘贴到 URL 输入框并保存、启用。
 2. 开启复写和 MitM，安装并信任 Loon CA 证书。
-3. 完全退出小红书后重新打开，刷新首页和本地页。
+3. 完全退出对应 App 后重新打开，刷新相关页面。
 4. 后续更新通过 Loon 更新此远程插件获取。订阅地址保持不变。
 
 添加新插件时，将 `.plugin` 文件放入 `plugins/`，再在上表添加对应的 Raw 链接。
@@ -27,3 +28,12 @@
 转换保留原 URL 正则、jq 表达式及 MitM 域名，只改为 Loon 插件格式，不依赖外部 JS。
 原站当时无法读取，尚未核实是否有后续更新。已检查 URL 匹配范围及 jq 样例过滤，尚未在 iPhone / Loon 中实测。
 过滤规则会移除所有非 `normal` 条目，适用范围为 `homefeed` 和 `localfeed`。
+
+
+### 闲鱼去广告
+
+- [原始配置](https://raw.githubusercontent.com/ddgksf2013/Rewrite/refs/heads/master/AdBlock/GoofishAds.conf)：ddgksf2013，V1.0.11（2025-09-06）。
+- [AMDC 原脚本](https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/amdc.js)：保留原作者署名和逻辑，随仓库存放于 `scripts/amdc.js`，插件自动下载。
+- 保留 11 条 jq 表达式、2 条请求拦截和域名拦截；转换为 Loon 语法，补上精确接口边界，避免搜索规则重复匹配搜索子接口。
+- 已做 jq 样例过滤、URL 范围及脚本分支检查，尚未在 iPhone / Loon 中实测。
+- 原作者建议先挂载规则再重新安装闲鱼，以清除已有广告缓存。
